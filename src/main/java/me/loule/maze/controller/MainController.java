@@ -6,9 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import me.loule.maze.model.MazeGenerator;
 
+import java.io.IOException;
 import java.net.URL;
-import java.io.*;
-import java.util.*;
+import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     @FXML
@@ -31,12 +31,13 @@ public class MainController implements Initializable {
 
             for (int i = 0; i < generatedMaze.length; i++) {
                 mazeGrid.add(new Label(generatedMaze[i]), cols, rows);
-                cols++;
 
                 if (cols == 8) {
                     cols = 0;
                     rows++;
-                }
+                } else
+                    cols++;
+
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -68,30 +68,30 @@ public class MazeGenerator {
 			for (int j = 0; j < x; j++) {
 //				wazeSave.write((maze[j][i] & 1) == 0 ? "+---" : "+   ");
                 mazeString += (maze[j][i] & 1) == 0 ? "+---" : "+   ";
-                mazeArray.add((maze[j][i] & 1) == 0 ? "▩▩▩▩" : "▩   ");
+                mazeArray.add((maze[j][i] & 1) == 0 ? "➖➖➖➖" : "➖   ");
 			}
             mazeString += "+\n";
-            mazeArray.add("▩");
+            mazeArray.add("+");
 //			wazeSave.write("+\n");
 			// draw the west edge
 			for (int j = 0; j < x; j++) {
 //				wazeSave.write((maze[j][i] & 8) == 0 ? "|   " : "    ");
                 mazeString += (maze[j][i] & 8) == 0 ? "|   " : "    ";
-                mazeArray.add((maze[j][i] & 8) == 0 ? "▩   " : "    ");
+                mazeArray.add((maze[j][i] & 8) == 0 ? "⬛   " : "    ");
 			}
             mazeString += "|\n";
-            mazeArray.add("▩");
+            mazeArray.add("⬛");
 //			wazeSave.write("|\n");
 		}
 		// draw the bottom line
 		for (int j = 0; j < x; j++) {
 //			wazeSave.write("+---");
             mazeString += "+---";
-            mazeArray.add("▩▩▩▩");
+            mazeArray.add("➖➖➖➖");
 		}
 //		wazeSave.write("+\n");
         mazeString += "+\n";
-        mazeArray.add("▩");
+        mazeArray.add("⬛");
 
 		System.out.println(mazeString);
 
