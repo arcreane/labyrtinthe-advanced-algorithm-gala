@@ -10,6 +10,7 @@ import me.loule.maze.model.MazeGenerator;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -23,7 +24,7 @@ public class MainController implements Initializable {
         MazeGenerator maze = new MazeGenerator(x, y);
 
         try {
-            System.out.println("Generating maze...");
+            System.out.println("Generating maze...;..");
             String generatedMaze[] = maze.display().toArray(new String[0]);
 
 //            System.out.println(Arrays.toString(generatedMaze));
@@ -34,14 +35,14 @@ public class MainController implements Initializable {
             for (int i = 0; i < generatedMaze.length; i++) {
                 if (generatedMaze[i].equals("➖➖➖➖") ) {
                     var myPane = new Pane();
-                    myPane.setStyle("-fx-background-color: RED;");
+                    myPane.setStyle("-fx-background-color: #000;");
                     myPane.setMaxHeight(2);
                     GridPane.setValignment(myPane, VPos.BOTTOM);
 
                     mazeGrid.add(myPane, cols, rows);
                 } else if (generatedMaze[i].equals("⬛   ") || generatedMaze[i].equals("⬛")) {
                     var myPane = new Pane();
-                    myPane.setStyle("-fx-background-color: GREEN;");
+                    myPane.setStyle("-fx-background-color: #000;");
                     myPane.setMaxWidth(2);
 
                     GridPane.setHalignment(myPane, HPos.LEFT);
@@ -49,7 +50,7 @@ public class MainController implements Initializable {
                 }
                 else if(generatedMaze[i].equals("+")  || generatedMaze[i].equals("➖   ")) {
                     var myPane = new Pane();
-                    myPane.setStyle("-fx-background-color: BLUE;");
+                    myPane.setStyle("-fx-background-color: #000;");
                     myPane.setMaxWidth(2);
                     myPane.setMaxHeight(2);
                     GridPane.setHalignment(myPane, HPos.LEFT);

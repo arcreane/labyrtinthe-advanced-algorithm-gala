@@ -93,8 +93,6 @@ public class MazeGenerator {
         mazeString += "+\n";
         mazeArray.add("⬛");
 
-		System.out.println(mazeString);
-
         return mazeArray;
 
 //		wazeSave.close();
