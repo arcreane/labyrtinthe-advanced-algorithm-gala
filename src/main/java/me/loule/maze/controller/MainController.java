@@ -2,8 +2,10 @@ package me.loule.maze.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import me.loule.maze.model.MazeGenerator;
 
 import java.io.IOException;
@@ -30,8 +32,30 @@ public class MainController implements Initializable {
             int cols = 0;
 
             for (int i = 0; i < generatedMaze.length; i++) {
-                mazeGrid.add(new Label(generatedMaze[i]), cols, rows);
+                if (generatedMaze[i].equals("➖➖➖➖") ) {
+                    var myPane = new Pane();
+                    myPane.setStyle("-fx-background-color: RED;");
+                    myPane.setMaxHeight(2);
+                    GridPane.setValignment(myPane, VPos.BOTTOM);
 
+                    mazeGrid.add(myPane, cols, rows);
+                } else if (generatedMaze[i].equals("⬛   ") || generatedMaze[i].equals("⬛")) {
+                    var myPane = new Pane();
+                    myPane.setStyle("-fx-background-color: GREEN;");
+                    myPane.setMaxWidth(2);
+
+                    GridPane.setHalignment(myPane, HPos.LEFT);
+                    mazeGrid.add(myPane, cols, rows);
+                }
+                else if(generatedMaze[i].equals("+")  || generatedMaze[i].equals("➖   ")) {
+                    var myPane = new Pane();
+                    myPane.setStyle("-fx-background-color: BLUE;");
+                    myPane.setMaxWidth(2);
+                    myPane.setMaxHeight(2);
+                    GridPane.setHalignment(myPane, HPos.LEFT);
+                    GridPane.setValignment(myPane, VPos.CENTER);
+                    mazeGrid.add(myPane, cols, rows);
+                }
                 if (cols == 8) {
                     cols = 0;
                     rows++;
