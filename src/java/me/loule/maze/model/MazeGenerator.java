@@ -8,23 +8,29 @@ public class MazeGenerator {
 	private final int y;
 	private final int[][] maze;
 
-	public MazeGenerator(int x, int y) {
+	public MazeGenerator(int x, int y) throws IOException {
 		this.x = x;
 		this.y = y;
 		maze = new int[this.x][this.y];
 		generateMaze(0, 0);
 	}
 
-    private void generateMaze(int cx, int cy) {
+    private void generateMaze(int cx, int cy) throws IOException {
+		System.out.println("Generating maze at " + cx + "," + cy);
 		DIR[] dirs = DIR.values();
 		Collections.shuffle(Arrays.asList(dirs));
 		for (DIR dir : dirs) {
 			int nx = cx + dir.dx;
 			int ny = cy + dir.dy;
-			if (between(nx, x) && between(ny, y)
-					&& (maze[nx][ny] == 0)) {
+			if (between(nx, x) && between(ny, y) && (maze[nx][ny] == 0)) {
 				maze[cx][cy] |= dir.bit;
 				maze[nx][ny] |= dir.opposite.bit;
+				System.out.println("(" + cx + "," + cy + ") " + dir);
+				// Clear terminal
+				System.out.print("\033[H\033[2J");
+				System.out.flush();
+
+				display();
 				generateMaze(nx, ny);
 			}
 		}
@@ -68,30 +74,32 @@ public class MazeGenerator {
 			for (int j = 0; j < x; j++) {
 //				wazeSave.write((maze[j][i] & 1) == 0 ? "+---" : "+   ");
                 mazeString += (maze[j][i] & 1) == 0 ? "+---" : "+   ";
-                mazeArray.add((maze[j][i] & 1) == 0 ? "➖➖➖➖" : "➖   ");
+                mazeArray.add((maze[j][i] & 1) == 0 ? "3333" : "3000");
 			}
             mazeString += "+\n";
-            mazeArray.add("+");
+            mazeArray.add("1");
 //			wazeSave.write("+\n");
 			// draw the west edge
 			for (int j = 0; j < x; j++) {
 //				wazeSave.write((maze[j][i] & 8) == 0 ? "|   " : "    ");
                 mazeString += (maze[j][i] & 8) == 0 ? "|   " : "    ";
-                mazeArray.add((maze[j][i] & 8) == 0 ? "⬛   " : "    ");
+                mazeArray.add((maze[j][i] & 8) == 0 ? "2000" : "0000");
 			}
             mazeString += "|\n";
-            mazeArray.add("⬛");
+            mazeArray.add("2");
 //			wazeSave.write("|\n");
 		}
 		// draw the bottom line
 		for (int j = 0; j < x; j++) {
 //			wazeSave.write("+---");
             mazeString += "+---";
-            mazeArray.add("➖➖➖➖");
+            mazeArray.add("3333");
 		}
 //		wazeSave.write("+\n");
         mazeString += "+\n";
-        mazeArray.add("⬛");
+        mazeArray.add("2");
+
+		System.out.println(mazeString);
 
         return mazeArray;
 

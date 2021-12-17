@@ -13,7 +13,6 @@ import me.loule.maze.model.MazeGenerator;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -36,12 +35,7 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         int x = 8;
         int y = 8;
-        MazeGenerator maze = null;
-        try {
-            maze = new MazeGenerator(x, y);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        MazeGenerator maze = new MazeGenerator(x, y);
 
         try {
             System.out.println("Generating maze...");
@@ -55,9 +49,12 @@ public class MainController implements Initializable {
             int[] playerPosition = {0, 1};
             System.out.println("Player position: " + playerPosition[0] + ", " + playerPosition[1]);
 
+
+            System.out.println();
+
             for (int i = 0; i < generatedMaze.length; i++) {
                 // Bottom row
-                if (generatedMaze[i].equals("3333")) {
+                if (generatedMaze[i].equals("➖➖➖➖")) {
                     var myPane = new Pane();
                     myPane.setStyle("-fx-background-color: #000;");
                     myPane.setMaxHeight(2);
@@ -68,7 +65,7 @@ public class MainController implements Initializable {
 
                 // Left row
 
-                else if (generatedMaze[i].equals("2000") || generatedMaze[i].equals("2")) {
+                else if (generatedMaze[i].equals("⬛   ") || generatedMaze[i].equals("⬛")) {
                     var myPane = new Pane();
                     myPane.setStyle("-fx-background-color: #000;");
                     myPane.setMaxWidth(2);
@@ -79,7 +76,7 @@ public class MainController implements Initializable {
 
                 // Left Center row
 
-                else if (generatedMaze[i].equals("1") || generatedMaze[i].equals("3000")) {
+                else if (generatedMaze[i].equals("+") || generatedMaze[i].equals("➖   ")) {
                     var myPane = new Pane();
                     myPane.setStyle("-fx-background-color: #000;");
                     myPane.setMaxWidth(2);
@@ -100,37 +97,45 @@ public class MainController implements Initializable {
             mazeGrid.add(new Label("▩"), 0, 1);
 
             btnRight.setOnMouseClicked(event -> {
-                movePlayer(1, "▶", "x", playerPosition);
+                mazeGrid.getChildren().remove(mazeGrid.getChildren().size() - 1);
+                mazeGrid.add(new Label("▶"), playerPosition[0], playerPosition[1]);
+
+                playerPosition[0]++;
+
+                mazeGrid.add(new Label("▩"), playerPosition[0], playerPosition[1]);
             });
 
             btnLeft.setOnMouseClicked(event -> {
-                movePlayer(-1, "◀", "x", playerPosition);
+                mazeGrid.getChildren().remove(mazeGrid.getChildren().size() - 1);
+                mazeGrid.add(new Label("◀"), playerPosition[0], playerPosition[1]);
+
+
+                playerPosition[0]--;
+
+                mazeGrid.add(new Label("▩"), playerPosition[0], playerPosition[1]);
             });
 
             btnUp.setOnMouseClicked(event -> {
-                movePlayer(-2, "▲", "y", playerPosition);
+                mazeGrid.getChildren().remove(mazeGrid.getChildren().size() - 1);
+                mazeGrid.add(new Label("▲"), playerPosition[0], playerPosition[1]);
+
+
+                playerPosition[1]--;
+
+                mazeGrid.add(new Label("▩"), playerPosition[0], playerPosition[1]);
             });
 
             btnDown.setOnMouseClicked(event -> {
-                movePlayer(2, "▼", "y", playerPosition);
+                mazeGrid.getChildren().remove(mazeGrid.getChildren().size() - 1);
+                mazeGrid.add(new Label("▼"), playerPosition[0], playerPosition[1]);
+
+
+                playerPosition[1]++;
+
+                mazeGrid.add(new Label("▩"), playerPosition[0], playerPosition[1]);
             });
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void movePlayer(int i, String s, String y, int[] playerPosition) {
-        mazeGrid.getChildren().remove(mazeGrid.getChildren().size() - 1);
-        mazeGrid.add(new Label(s), playerPosition[0], playerPosition[1]);
-
-
-        if(Objects.equals(y, "x")) {
-            playerPosition[0] = playerPosition[0] + i;
-        } else if (Objects.equals(y, "y")) {
-            playerPosition[1] = playerPosition[1] + i;
-        }
-
-        mazeGrid.add(new Label("▩"), playerPosition[0], playerPosition[1]);
-        System.out.println("Player position: " + playerPosition[0] + ", " + playerPosition[1]);
     }
 }
